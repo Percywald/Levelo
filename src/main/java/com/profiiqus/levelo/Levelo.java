@@ -1,17 +1,22 @@
-package com.percywald.levelo;
+package com.profiiqus.levelo;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Levelo extends JavaPlugin {
 
+    public static Levelo plugin;
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        Levelo.plugin = this;
 
+        try {
+
+        }
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+
     }
 }
