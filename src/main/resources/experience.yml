@@ -1,0 +1,31 @@
+##############################################################################
+# +------------------------------------------------------------------------+ #
+# |                       Levelo Experience Config                         | #
+# |                 https://github.com/ProfiiQus/Levelo                    | #
+# +------------------------------------------------------------------------+ #
+##############################################################################
+
+# Whether a formula should be used for experience calculation.
+# If true, the required amount of XP will be calculated with the formula below.
+# If false, static amount of experience will be required every level.
+use-experience-formula: true
+
+# Experience is calculated with the following formula: X*(lvl + Y)^2 + Z*lvl + W.
+# You can set the parameters below. Only enabled, if the setting above is true.
+experience-formula:
+  X: 1
+  Y: 9
+  Z: 4
+  W: 0
+
+# Static amount of experience that is required to level up.
+# Only used, if 'use-experience-formula' is set to false.
+static-experience: 500
+
+# Maximal level settings. If enabled, players will only be able to reach certain level.
+# If grant-xp-over setting is true, players will be able to get experience even after they have
+# reached the maximal level (but not be able to level up).
+max-level:
+  enabled: false
+  level: 100
+  grant-xp-over: false
