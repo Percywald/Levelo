@@ -3,8 +3,6 @@ package com.profiiqus.levelo.storage.providers.yaml;
 import com.profiiqus.levelo.Levelo;
 import com.profiiqus.levelo.object.LeveloPlayer;
 import com.profiiqus.levelo.storage.IDataProvider;
-import com.profiiqus.levelo.storage.Storage;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,13 +16,9 @@ import java.util.UUID;
 
 public class YAMLProvider implements IDataProvider {
 
-    private final Levelo plugin;
-    private final Storage storage;
     private final File file;
 
     public YAMLProvider(final Levelo plugin) {
-        this.plugin = plugin;
-        this.storage = plugin.getStorage();
         this.file = new File(plugin.getDataFolder(), "player-data.yml");
     }
 
@@ -56,16 +50,50 @@ public class YAMLProvider implements IDataProvider {
 
     @Override
     public Map<UUID, LeveloPlayer> getPlayers(Collection<? extends Player> players) {
-        return null;
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        Map<UUID, LeveloPlayer> resultMap = new HashMap<>();
+        UUID uniqueID;
+        String stringID;
+        for(Player player: players) {
+            uniqueID = player.getUniqueId();
+            stringID = uniqueID.toString();
+            if(config.contains(stringID)) {
+                int level = config.getInt(stringID + ".level");
+                double experience = config.getDouble(stringID + ".double");
+                resultMap.put(uniqueID, new LeveloPlayer(uniqueID, level, experience));
+            }
+        }
+        return resultMap;
     }
 
     @Override
     public void savePlayer(LeveloPlayer player) {
-
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        String stringID = player.getUniqueID().toString();
+        config.set(stringID + ".level", player.getLevel());
+        config.set(stringID + ".experience", player.getExperience());
+        this.trySaveFile(config);
     }
 
     @Override
-    public void savePlayers(Map<UUID, LeveloPlayer> players) {
+    public void savePlayers(final Map<UUID, LeveloPlayer> players) {
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        String stringID;
+        LeveloPlayer player;
+        for(Map.Entry<UUID, LeveloPlayer> entry: players.entrySet()) {
+            stringID = entry.getKey().toString();
+            player = entry.getValue();
+            config.set(stringID + ".level", player.getLevel());
+            config.set(stringID + ".experience", player.getExperience());
+        }
+        this.trySaveFile(config);
+    }
 
+    private void trySaveFile(final FileConfiguration config) {
+        try {
+            config.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
