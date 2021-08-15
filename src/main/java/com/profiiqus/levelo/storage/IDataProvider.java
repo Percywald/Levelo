@@ -13,6 +13,8 @@ import java.util.UUID;
  */
 public interface IDataProvider {
 
+    void init();
+
     /**
      * Gets player by his UUID
      * @param uniqueID Player's UUID
@@ -43,8 +45,7 @@ public interface IDataProvider {
     /**
      * Saves players into Data provider.
      * @param players Hash map of player data to save
-     * @param async Whether to save them async (onDisable -> needs to be sync)
      */
-    void savePlayers(Map<UUID, LeveloPlayer> players, boolean async);
+    void savePlayers(final Map<UUID, LeveloPlayer> players);
 
 }
