@@ -13,17 +13,13 @@ public class LeveloPlayer {
     private final UUID uniqueID;
 
     @Getter
-    private final String lastUsername;
-
-    @Getter
     private final int level;
 
     @Getter
     private final double experience;
 
-    public LeveloPlayer(UUID uniqueID, String lastUsername, int level, double experience) {
+    public LeveloPlayer(UUID uniqueID, int level, double experience) {
         this.uniqueID = uniqueID;
-        this.lastUsername = lastUsername;
         this.level = level;
         this.experience = experience;
     }

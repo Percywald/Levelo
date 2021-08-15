@@ -55,11 +55,6 @@ public class YAMLProvider implements IDataProvider {
     }
 
     @Override
-    public LeveloPlayer getPlayer(String playerName) {
-        return null;
-    }
-
-    @Override
     public Map<UUID, LeveloPlayer> getPlayers(Collection<? extends Player> players) {
         return null;
     }

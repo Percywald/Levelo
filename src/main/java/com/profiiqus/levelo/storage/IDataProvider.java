@@ -27,13 +27,6 @@ public interface IDataProvider {
     LeveloPlayer getPlayer(UUID uniqueID);
 
     /**
-     * Gets player by his nickname
-     * @param playerName Player's nickname
-     * @return
-     */
-    LeveloPlayer getPlayer(String playerName);
-
-    /**
      * Gets player data of provided player collection.
      * @param players Players to get from Data Provider
      * @return
