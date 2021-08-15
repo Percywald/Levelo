@@ -4,7 +4,7 @@ import com.profiiqus.levelo.object.LeveloPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -32,7 +32,7 @@ public interface IDataProvider {
      * @param players Players to get from Data Provider
      * @return
      */
-    HashMap<UUID, LeveloPlayer> getPlayers(Collection<Player> players);
+    Map<UUID, LeveloPlayer> getPlayers(Collection<Player> players);
 
     /**
      * Saves player into Data provider.
@@ -45,6 +45,6 @@ public interface IDataProvider {
      * @param players Hash map of player data to save
      * @param async Whether to save them async (onDisable -> needs to be sync)
      */
-    void savePlayers(HashMap<UUID, LeveloPlayer> players, boolean async);
+    void savePlayers(Map<UUID, LeveloPlayer> players, boolean async);
 
 }
