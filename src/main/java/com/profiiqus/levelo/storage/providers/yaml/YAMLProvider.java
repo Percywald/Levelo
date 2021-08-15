@@ -26,6 +26,10 @@ public class YAMLProvider implements IDataProvider {
         this.plugin = plugin;
         this.storage = plugin.getStorage();
         this.file = new File(plugin.getDataFolder(), "player-data.yml");
+    }
+
+    @Override
+    public void init() {
         this.file.getParentFile().mkdirs();
         if(!this.file.exists()) {
             try {
@@ -37,12 +41,16 @@ public class YAMLProvider implements IDataProvider {
     }
 
     @Override
-    public void init() {
+    public LeveloPlayer getPlayer(final UUID uniqueID) {
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        String stringID = uniqueID.toString();
+        if(config.contains(stringID)) {
+            int level = config.getInt(stringID + ".level");
+            double experience = config.getDouble(stringID + ".experience");
+            return new LeveloPlayer(uniqueID, level, experience);
+        }
 
-    }
-
-    @Override
-    public LeveloPlayer getPlayer(UUID uniqueID) {
+        // player does not exist, return null
         return null;
     }
 
