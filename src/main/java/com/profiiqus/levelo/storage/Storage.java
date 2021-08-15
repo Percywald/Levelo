@@ -62,21 +62,6 @@ public class Storage {
         }.runTaskAsynchronously(this.plugin);
     }
 
-    public void getPlayer(final String playerName, final PlayerLoadCallback callback) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                final LeveloPlayer player = dataProvider.getPlayer(playerName);
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        callback.onLoadingDone(player);
-                    }
-                }.runTask(plugin);
-            }
-        }.runTaskAsynchronously(this.plugin);
-    }
-
     public void cachePlayer(final LeveloPlayer player) {
         this.playerData.put(player.getUniqueID(), player);
     }
