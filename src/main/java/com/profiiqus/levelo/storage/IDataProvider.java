@@ -32,7 +32,7 @@ public interface IDataProvider {
      * @param players Players to get from Data Provider
      * @return
      */
-    Map<UUID, LeveloPlayer> getPlayers(Collection<Player> players);
+    Map<UUID, LeveloPlayer> getPlayers(Collection<? extends Player> players);
 
     /**
      * Saves player into Data provider.

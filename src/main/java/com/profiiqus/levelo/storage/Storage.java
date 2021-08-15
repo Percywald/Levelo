@@ -3,12 +3,15 @@ package com.profiiqus.levelo.storage;
 import com.profiiqus.levelo.Levelo;
 import com.profiiqus.levelo.config.Configuration;
 import com.profiiqus.levelo.object.LeveloPlayer;
+import com.profiiqus.levelo.storage.callback.PlayerCollectionLoadCallback;
 import com.profiiqus.levelo.storage.callback.PlayerLoadCallback;
 import com.profiiqus.levelo.storage.providers.mysql.MySQLProvider;
 import com.profiiqus.levelo.storage.providers.yaml.YAMLProvider;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -18,7 +21,7 @@ public class Storage {
     private final Levelo plugin;
     private final Configuration config;
     private final Map<String, IDataProvider> availableProviders;
-    private final Map<UUID, LeveloPlayer> playerData;
+    private Map<UUID, LeveloPlayer> playerData;
     private final IDataProvider dataProvider;
 
     public Storage(Levelo plugin) {
@@ -31,7 +34,7 @@ public class Storage {
             }
         };
         this.dataProvider = this.getConfiguredProvider();
-        this.playerData = this.dataProvider.getPLaye
+        this.loadPlayers(Bukkit.getOnlinePlayers(), data -> playerData = data);
     }
 
     public IDataProvider getConfiguredProvider() {
@@ -79,6 +82,21 @@ public class Storage {
 
     public void dropPlayer(final UUID uniqueID) {
         this.playerData.remove(uniqueID);
+    }
+
+    public void loadPlayers(final Collection<? extends Player> players, final PlayerCollectionLoadCallback callback) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Map<UUID, LeveloPlayer> playerData = dataProvider.getPlayers(players);
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        callback.onLoadingDone(playerData);
+                    }
+                }.runTaskAsynchronously(plugin);
+            }
+        }.runTaskAsynchronously(this.plugin);
     }
 
 }
