@@ -13,6 +13,10 @@ import java.util.UUID;
  */
 public interface IDataProvider {
 
+    /**
+     * Initializes the selected data provider.
+     * Only run, if the provider is selected as the active one.
+     */
     void init();
 
     /**
