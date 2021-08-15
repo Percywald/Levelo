@@ -29,11 +29,12 @@ public class Storage {
         this.config = plugin.getConfiguration();
         this.availableProviders = new HashMap<String, IDataProvider>() {
             {
-                put("yaml", new YAMLProvider());
+                put("yaml", new YAMLProvider(plugin));
                 put("mysql", new MySQLProvider());
             }
         };
         this.dataProvider = this.getConfiguredProvider();
+        this.dataProvider.init();
         this.loadPlayers(Bukkit.getOnlinePlayers(), data -> playerData = data);
     }
 
@@ -42,7 +43,7 @@ public class Storage {
         if(this.availableProviders.containsKey(configuredProvider)) {
             return this.availableProviders.get(configuredProvider);
         } else {
-            return new YAMLProvider();
+            return this.availableProviders.get("yaml");
         }
     }
 
@@ -97,6 +98,33 @@ public class Storage {
                 }.runTaskAsynchronously(plugin);
             }
         }.runTaskAsynchronously(this.plugin);
+    }
+
+    public void savePlayer(final UUID uniqueID) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                dataProvider.savePlayer(playerData.get(uniqueID));
+            }
+        }.runTaskAsynchronously(this.plugin);
+    }
+
+    public void savePlayers(final Map<UUID, LeveloPlayer> playerData, final boolean async) {
+        if(async) {
+            new BukkitRunnable() {
+                @Override
+                public void run() {
+                    dataProvider.savePlayers(playerData);
+                }
+            }.runTaskAsynchronously(this.plugin);
+            return;
+        }
+
+        dataProvider.savePlayers(playerData);
+    }
+
+    public Map<UUID, LeveloPlayer> getPlayerData() {
+        return this.playerData;
     }
 
 }

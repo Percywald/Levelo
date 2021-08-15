@@ -10,6 +10,14 @@ import java.util.UUID;
 
 public class MySQLProvider implements IDataProvider {
 
+    public MySQLProvider() {
+
+    }
+
+    public void init() {
+
+    }
+
     @Override
     public LeveloPlayer getPlayer(UUID uniqueID) {
         return null;

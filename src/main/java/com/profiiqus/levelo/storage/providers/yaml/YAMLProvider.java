@@ -22,9 +22,9 @@ public class YAMLProvider implements IDataProvider {
     private final Storage storage;
     private final File file;
 
-    public YAMLProvider(final Levelo plugin, final Storage storage) {
+    public YAMLProvider(final Levelo plugin) {
         this.plugin = plugin;
-        this.storage = storage;
+        this.storage = plugin.getStorage();
         this.file = new File(plugin.getDataFolder(), "player-data.yml");
         this.file.getParentFile().mkdirs();
         if(!this.file.exists()) {
@@ -34,6 +34,11 @@ public class YAMLProvider implements IDataProvider {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void init() {
+
     }
 
     @Override
