@@ -2,6 +2,7 @@ package com.profiiqus.levelo.storage.providers.yaml;
 
 import com.profiiqus.levelo.Levelo;
 import com.profiiqus.levelo.object.LeveloPlayer;
+import com.profiiqus.levelo.storage.IDataProvider;
 import com.profiiqus.levelo.storage.Storage;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -10,11 +11,12 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class YAMLProvider {
+public class YAMLProvider implements IDataProvider {
 
     private final Levelo plugin;
     private final Storage storage;
@@ -34,28 +36,28 @@ public class YAMLProvider {
         }
     }
 
-    public Map<UUID, LeveloPlayer> loadOnlinePlayers() {
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        Map<UUID, LeveloPlayer> resultMap = new HashMap<>();
+    @Override
+    public LeveloPlayer getPlayer(UUID uniqueID) {
+        return null;
+    }
 
-        for(Player p: Bukkit.getOnlinePlayers()) {
-            UUID uniqueID = p.getUniqueId();
-            String stringID = uniqueID.toString();
-            if(config.getKeys(false).contains(stringID)) {
-                resultMap.put(uniqueID, new NextPlayer(
-                        uniqueID,
-                        config.getLong(stringID + ".time-played"),
-                        config.getLong(stringID + ".first-joined"))
-                );
-            } else {
-                resultMap.put(uniqueID, new NextPlayer(
-                        uniqueID,
-                        0l,
-                        System.currentTimeMillis()
-                ));
-            }
-        }
+    @Override
+    public LeveloPlayer getPlayer(String playerName) {
+        return null;
+    }
 
-        return resultMap;
+    @Override
+    public Map<UUID, LeveloPlayer> getPlayers(Collection<? extends Player> players) {
+        return null;
+    }
+
+    @Override
+    public void savePlayer(LeveloPlayer player) {
+
+    }
+
+    @Override
+    public void savePlayers(Map<UUID, LeveloPlayer> players) {
+
     }
 }
