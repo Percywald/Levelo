@@ -21,7 +21,12 @@ public class PlayerDataHandler implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         UUID uniqueID = event.getPlayer().getUniqueId();
-        storage.getPlayer(uniqueID, player -> storage.cachePlayer(player));
+        storage.getPlayer(uniqueID, player -> {
+            if(player == null) {
+                player = new LeveloPlayer(uniqueID, 1, 0.0D);
+            }
+            storage.cachePlayer(player);
+        });
     }
 
     @EventHandler
