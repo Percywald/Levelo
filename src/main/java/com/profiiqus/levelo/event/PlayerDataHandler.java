@@ -26,6 +26,8 @@ public class PlayerDataHandler implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        storage.dropPlayer(event.getPlayer().getUniqueId());
+        UUID uniqueID = event.getPlayer().getUniqueId();
+        storage.savePlayer(uniqueID);
+        storage.dropPlayer(uniqueID);
     }
 }
