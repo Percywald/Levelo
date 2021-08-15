@@ -1,4 +1,4 @@
-package com.profiiqus.levelo.storage.providers.yaml;
+package com.profiiqus.levelo.storage.callback;
 
 import com.profiiqus.levelo.object.LeveloPlayer;
 
