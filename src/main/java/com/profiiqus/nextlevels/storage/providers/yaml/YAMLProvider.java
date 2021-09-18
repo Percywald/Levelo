@@ -1,8 +1,8 @@
-package com.profiiqus.levelo.storage.providers.yaml;
+package com.profiiqus.nextlevels.storage.providers.yaml;
 
-import com.profiiqus.levelo.Levelo;
-import com.profiiqus.levelo.object.LeveloPlayer;
-import com.profiiqus.levelo.storage.IDataProvider;
+import com.profiiqus.nextlevels.NextLevels;
+import com.profiiqus.nextlevels.object.NextPlayer;
+import com.profiiqus.nextlevels.storage.IDataProvider;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ public class YAMLProvider implements IDataProvider {
 
     private final File file;
 
-    public YAMLProvider(final Levelo plugin) {
+    public YAMLProvider(final NextLevels plugin) {
         this.file = new File(plugin.getDataFolder(), "player-data.yml");
     }
 
@@ -35,13 +35,13 @@ public class YAMLProvider implements IDataProvider {
     }
 
     @Override
-    public LeveloPlayer getPlayer(final UUID uniqueID) {
+    public NextPlayer getPlayer(final UUID uniqueID) {
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         String stringID = uniqueID.toString();
         if(config.contains(stringID)) {
             int level = config.getInt(stringID + ".level");
             double experience = config.getDouble(stringID + ".experience");
-            return new LeveloPlayer(uniqueID, level, experience);
+            return new NextPlayer(uniqueID, level, experience);
         }
 
         // player does not exist, return null
@@ -49,9 +49,9 @@ public class YAMLProvider implements IDataProvider {
     }
 
     @Override
-    public Map<UUID, LeveloPlayer> getPlayers(Collection<? extends Player> players) {
+    public Map<UUID, NextPlayer> getPlayers(Collection<? extends Player> players) {
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        Map<UUID, LeveloPlayer> resultMap = new HashMap<>();
+        Map<UUID, NextPlayer> resultMap = new HashMap<>();
         UUID uniqueID;
         String stringID;
         for(Player player: players) {
@@ -60,14 +60,14 @@ public class YAMLProvider implements IDataProvider {
             if(config.contains(stringID)) {
                 int level = config.getInt(stringID + ".level");
                 double experience = config.getDouble(stringID + ".double");
-                resultMap.put(uniqueID, new LeveloPlayer(uniqueID, level, experience));
+                resultMap.put(uniqueID, new NextPlayer(uniqueID, level, experience));
             }
         }
         return resultMap;
     }
 
     @Override
-    public void savePlayer(LeveloPlayer player) {
+    public void savePlayer(NextPlayer player) {
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         String stringID = player.getUniqueID().toString();
         config.set(stringID + ".level", player.getLevel());
@@ -76,11 +76,11 @@ public class YAMLProvider implements IDataProvider {
     }
 
     @Override
-    public void savePlayers(final Map<UUID, LeveloPlayer> players) {
+    public void savePlayers(final Map<UUID, NextPlayer> players) {
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         String stringID;
-        LeveloPlayer player;
-        for(Map.Entry<UUID, LeveloPlayer> entry: players.entrySet()) {
+        NextPlayer player;
+        for(Map.Entry<UUID, NextPlayer> entry: players.entrySet()) {
             stringID = entry.getKey().toString();
             player = entry.getValue();
             config.set(stringID + ".level", player.getLevel());

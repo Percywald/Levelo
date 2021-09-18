@@ -1,8 +1,7 @@
-package com.profiiqus.levelo.event;
+package com.profiiqus.nextlevels.event;
 
-import com.profiiqus.levelo.object.LeveloPlayer;
-import com.profiiqus.levelo.storage.Storage;
-import com.profiiqus.levelo.storage.callback.PlayerLoadCallback;
+import com.profiiqus.nextlevels.object.NextPlayer;
+import com.profiiqus.nextlevels.storage.Storage;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -23,7 +22,7 @@ public class PlayerDataHandler implements Listener {
         UUID uniqueID = event.getPlayer().getUniqueId();
         storage.getPlayer(uniqueID, player -> {
             if(player == null) {
-                player = new LeveloPlayer(uniqueID, 1, 0.0D);
+                player = new NextPlayer(uniqueID, 1, 0.0D);
             }
             storage.cachePlayer(player);
         });

@@ -1,6 +1,6 @@
-package com.profiiqus.levelo.config;
+package com.profiiqus.nextlevels.config;
 
-import com.profiiqus.levelo.Levelo;
+import com.profiiqus.nextlevels.NextLevels;
 import lombok.Getter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class Configuration {
 
-    private final Levelo plugin;
+    private final NextLevels plugin;
     private final File configFile, messageFile, experienceFile;
     private final Logger log;
 
@@ -23,7 +23,7 @@ public class Configuration {
     @Getter
     private int X, Y, Z, W, requiredStaticExperience, maxLevel;
 
-    public Configuration(final Levelo plugin) {
+    public Configuration(final NextLevels plugin) {
         this.plugin = plugin;
         this.log = plugin.getLogger();
         this.configFile = new File(this.plugin.getDataFolder(), "config.yml");

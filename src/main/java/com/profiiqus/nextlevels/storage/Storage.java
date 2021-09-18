@@ -1,12 +1,12 @@
-package com.profiiqus.levelo.storage;
+package com.profiiqus.nextlevels.storage;
 
-import com.profiiqus.levelo.Levelo;
-import com.profiiqus.levelo.config.Configuration;
-import com.profiiqus.levelo.object.LeveloPlayer;
-import com.profiiqus.levelo.storage.callback.PlayerCollectionLoadCallback;
-import com.profiiqus.levelo.storage.callback.PlayerLoadCallback;
-import com.profiiqus.levelo.storage.providers.mysql.MySQLProvider;
-import com.profiiqus.levelo.storage.providers.yaml.YAMLProvider;
+import com.profiiqus.nextlevels.NextLevels;
+import com.profiiqus.nextlevels.config.Configuration;
+import com.profiiqus.nextlevels.object.NextPlayer;
+import com.profiiqus.nextlevels.storage.callback.PlayerCollectionLoadCallback;
+import com.profiiqus.nextlevels.storage.callback.PlayerLoadCallback;
+import com.profiiqus.nextlevels.storage.providers.mysql.MySQLProvider;
+import com.profiiqus.nextlevels.storage.providers.yaml.YAMLProvider;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,13 +18,13 @@ import java.util.UUID;
 
 public class Storage {
 
-    private final Levelo plugin;
+    private final NextLevels plugin;
     private final Configuration config;
     private final Map<String, IDataProvider> availableProviders;
-    private Map<UUID, LeveloPlayer> playerData;
+    private Map<UUID, NextPlayer> playerData;
     private final IDataProvider dataProvider;
 
-    public Storage(Levelo plugin) {
+    public Storage(NextLevels plugin) {
         this.plugin = plugin;
         this.config = plugin.getConfiguration();
         this.availableProviders = new HashMap<String, IDataProvider>() {
@@ -51,7 +51,7 @@ public class Storage {
         new BukkitRunnable() {
             @Override
             public void run() {
-                final LeveloPlayer player = dataProvider.getPlayer(uniqueID);
+                final NextPlayer player = dataProvider.getPlayer(uniqueID);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -62,7 +62,7 @@ public class Storage {
         }.runTaskAsynchronously(this.plugin);
     }
 
-    public void cachePlayer(final LeveloPlayer player) {
+    public void cachePlayer(final NextPlayer player) {
         this.playerData.put(player.getUniqueID(), player);
     }
 
@@ -74,7 +74,7 @@ public class Storage {
         new BukkitRunnable() {
             @Override
             public void run() {
-                Map<UUID, LeveloPlayer> playerData = dataProvider.getPlayers(players);
+                Map<UUID, NextPlayer> playerData = dataProvider.getPlayers(players);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
@@ -94,7 +94,7 @@ public class Storage {
         }.runTaskAsynchronously(this.plugin);
     }
 
-    public void savePlayers(final Map<UUID, LeveloPlayer> playerData, final boolean async) {
+    public void savePlayers(final Map<UUID, NextPlayer> playerData, final boolean async) {
         if(async) {
             new BukkitRunnable() {
                 @Override
@@ -108,7 +108,7 @@ public class Storage {
         dataProvider.savePlayers(playerData);
     }
 
-    public Map<UUID, LeveloPlayer> getPlayerData() {
+    public Map<UUID, NextPlayer> getPlayerData() {
         return this.playerData;
     }
 

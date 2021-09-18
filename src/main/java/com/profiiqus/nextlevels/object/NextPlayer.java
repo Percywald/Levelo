@@ -1,11 +1,11 @@
-package com.profiiqus.levelo.object;
+package com.profiiqus.nextlevels.object;
 
-import com.profiiqus.levelo.config.Configuration;
+import com.profiiqus.nextlevels.config.Configuration;
 import lombok.Getter;
 
 import java.util.UUID;
 
-public class LeveloPlayer {
+public class NextPlayer {
 
     public static Configuration config;
 
@@ -18,7 +18,7 @@ public class LeveloPlayer {
     @Getter
     private final double experience;
 
-    public LeveloPlayer(UUID uniqueID, int level, double experience) {
+    public NextPlayer(UUID uniqueID, int level, double experience) {
         this.uniqueID = uniqueID;
         this.level = level;
         this.experience = experience;

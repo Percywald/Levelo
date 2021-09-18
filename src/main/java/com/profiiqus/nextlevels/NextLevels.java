@@ -1,12 +1,12 @@
-package com.profiiqus.levelo;
+package com.profiiqus.nextlevels;
 
-import com.profiiqus.levelo.config.Configuration;
-import com.profiiqus.levelo.object.LeveloPlayer;
-import com.profiiqus.levelo.storage.Storage;
+import com.profiiqus.nextlevels.config.Configuration;
+import com.profiiqus.nextlevels.object.NextPlayer;
+import com.profiiqus.nextlevels.storage.Storage;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Levelo extends JavaPlugin {
+public final class NextLevels extends JavaPlugin {
 
     @Getter
     private Configuration configuration;
@@ -19,7 +19,7 @@ public final class Levelo extends JavaPlugin {
 
         try {
             this.configuration = new Configuration(this);
-            LeveloPlayer.config = this.configuration;
+            NextPlayer.config = this.configuration;
 
             this.storage = new Storage(this);
         }

@@ -1,6 +1,6 @@
-package com.profiiqus.levelo.storage;
+package com.profiiqus.nextlevels.storage;
 
-import com.profiiqus.levelo.object.LeveloPlayer;
+import com.profiiqus.nextlevels.object.NextPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -24,25 +24,25 @@ public interface IDataProvider {
      * @param uniqueID Player's UUID
      * @return
      */
-    LeveloPlayer getPlayer(UUID uniqueID);
+    NextPlayer getPlayer(UUID uniqueID);
 
     /**
      * Gets player data of provided player collection.
      * @param players Players to get from Data Provider
      * @return
      */
-    Map<UUID, LeveloPlayer> getPlayers(Collection<? extends Player> players);
+    Map<UUID, NextPlayer> getPlayers(Collection<? extends Player> players);
 
     /**
      * Saves player into Data provider.
      * @param player Player object being saved
      */
-    void savePlayer(LeveloPlayer player);
+    void savePlayer(NextPlayer player);
 
     /**
      * Saves players into Data provider.
      * @param players Hash map of player data to save
      */
-    void savePlayers(final Map<UUID, LeveloPlayer> players);
+    void savePlayers(final Map<UUID, NextPlayer> players);
 
 }
